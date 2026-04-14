@@ -5,23 +5,27 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("MOVEMENT")]
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] bool canMove = true;
 
+    [Header("Z POSITION")]
+    [SerializeField] float zSpeed = 100f;
+    [SerializeField] Vector2 zRange = new Vector2(-3.5f, 0f);
+    [SerializeField] float zSmoothSpeed = 3f;
+    [SerializeField] float passiveZRecoveryAmount = 15f;
+    [SerializeField] float passiveZRecoveryTime = 5f;
+
+    [Header("DASH")]
     [SerializeField] float dashForce = 20f;
     [SerializeField] float dashDuration = 0.3f;
     [SerializeField] float dashCooldown = 1.2f;
     float dashCounter;
-
     [SerializeField] bool isDashing = false;
     [SerializeField] bool canDash = true;
 
+    [Header("JUMP")]
     [SerializeField] float jumpForce = 10f;
-
-    [SerializeField] float invincibleDuration = 0.8f;
-    public float invincibleCounter;
-
-    Rigidbody rb;
 
     [Header("GROUND CHECKER")]
     [SerializeField] bool isGrounded;
@@ -30,10 +34,19 @@ public class PlayerController : MonoBehaviour
     private Collider[] detectedColliders;
     public LayerMask groundLayer;
 
+    [SerializeField] float invincibleDuration = 0.8f;
+     float invincibleCounter;
+
+    Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        PlayerHurtbox.Instance.onHurt += ZPositionChange;
+
+        StartCoroutine(PassiveZRecovery());
     }
 
     private void Update()
@@ -71,6 +84,8 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
 
+        CalculateZPosition();
+        
         GroundCheck();
     }
 
@@ -122,6 +137,41 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
 
         dashCounter = dashCooldown;
+    }
+    
+    void CalculateZPosition()
+    {
+        //Calcula el porcentaje de la velocidad en Z
+        float zSpeedNormalized = zSpeed / 100f;
+
+        //Obtiene el punto en el que tiene que posicionarse el player entre las posiciones Z mínimas y máximas
+        float targetZ = Mathf.Lerp(zRange.x, zRange.y, zSpeedNormalized);
+
+        //Se mueve hacia la posición Z target de forma suave
+        transform.position = Vector3.Slerp(transform.position, new Vector3(transform.position.x, transform.position.y, targetZ), Time.deltaTime * zSmoothSpeed);
+    }
+
+    public void ZPositionChange(float speedChange)
+    {
+        zSpeed += speedChange;
+
+        if(zSpeed > 100)
+        {
+            zSpeed = 100;
+        }
+        else if(zSpeed <= 0)
+        {
+            //Muerte
+        }
+    }
+
+    IEnumerator PassiveZRecovery()
+    {
+        while (true)
+        {
+            ZPositionChange(passiveZRecoveryAmount);
+            yield return new WaitForSeconds(passiveZRecoveryTime);
+        }
     }
 
     void GroundCheck()
