@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6754822250357518727}
   - component: {fileID: 2247710793414653772}
   - component: {fileID: 3531317850755414717}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: platform1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 18.396765, y: 16.997818, z: 25.84267}
-  m_LocalScale: {x: 10, y: 0.5, z: 20}
+  m_LocalScale: {x: 10, y: 0.5, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 67b2807fd72b9cc40947365e1f4e3fe9, type: 2}
+  - {fileID: 2100000, guid: d6eeae83a2c1ad54b9d2e6daee40c5c3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -118,5 +118,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8725062aeb5036f47a37a8d5f10c16d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 8
   despawn: -11
