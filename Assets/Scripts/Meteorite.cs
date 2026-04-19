@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Meteorite : MonoBehaviour
 {
-    public float velocidad = 10f;
-    private Transform jugador;
+    public float speed = 10f;
+    public bool followPlayer = true; // Bool para activar/desactivar el seguimiento
+
+    private Transform player;
 
     void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
-            jugador = playerObj.transform;
+            player = playerObj.transform;
         }
         else
         {
@@ -22,20 +24,30 @@ public class Meteorite : MonoBehaviour
 
     void Update()
     {
-        if (jugador == null) return;
+        if (player == null) return;
 
-        // Mover hacia el jugador en X (izquierda-derecha)
-        float direccionX = jugador.position.x - transform.position.x;
+        Vector3 movement;
 
-        // Mover hacia adelante (hacia la cámara/jugador) en Z
-        Vector3 movimiento = new Vector3(direccionX, 0, -1f).normalized;
-        transform.position += movimiento * velocidad * Time.deltaTime;
+        if (followPlayer)
+        {
+            // Mover hacia el jugador en X (izquierda-derecha)
+            float directionX = player.position.x - transform.position.x;
+            // Mover hacia adelante (hacia la cámara/jugador) en Z
+            movement = new Vector3(directionX, 0, -1f).normalized;
+        }
+        else
+        {
+            // Solo mover recto hacia adelante (sin seguir al jugador)
+            movement = new Vector3(0, 0, -1f);
+        }
+
+        transform.position += movement * speed * Time.deltaTime;
 
         // Rotar para efecto visual
         transform.Rotate(Vector3.up * 200f * Time.deltaTime);
 
         // Destruir si pasa al jugador
-        if (transform.position.z < jugador.position.z - 5f)
+        if (transform.position.z < player.position.z - 5f)
         {
             Destroy(gameObject);
         }
