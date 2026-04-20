@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7644244349258172673}
   - component: {fileID: 5042944006890628248}
   - component: {fileID: 121723005345625962}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: meteorite1
   m_TagString: EnemyProjectile
   m_Icon: {fileID: 0}
@@ -118,5 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1683f9b42ecc5e744aa7ee63b779fb29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 45
+  speedReduction: -40
+  speed: 30
   followPlayer: 1

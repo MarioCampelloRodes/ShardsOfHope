@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Meteorite : MonoBehaviour
+public class Meteorite : EnemyProjectile, IParryable
 {
     public float speed = 10f;
     public bool followPlayer = true; 
@@ -60,13 +60,16 @@ public class Meteorite : MonoBehaviour
         {
             if (PlayerHurtbox.Instance != null)
             {
-                PlayerHurtbox.Instance.onHurt?.Invoke(10f);
+                PlayerHurtbox.Instance.onHurt?.Invoke(speedReduction);
             }
-
-            //reiniciar la escena
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         }
 
+        // El meteorito se destruye siempre al chocar
+        Destroy(gameObject);
+    }
+
+    public void Parry()
+    {
         // El meteorito se destruye siempre al chocar
         Destroy(gameObject);
     }

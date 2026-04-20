@@ -21,8 +21,7 @@ public class PlayerHurtbox : MonoBehaviour
     {
         if (other.CompareTag("EnemyProjectile"))
         {
-            //onHurt?.Invoke(other.GetComponent<EnemyProjectile>().speedReduction);
-            KillPlayer.Instance.Die();
+            onHurt?.Invoke(other.GetComponent<EnemyProjectile>().speedReduction);
         }
     }
 }

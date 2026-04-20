@@ -23,6 +23,7 @@ public class KillPlayer : MonoBehaviour
         //}
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
     }
 }
 
