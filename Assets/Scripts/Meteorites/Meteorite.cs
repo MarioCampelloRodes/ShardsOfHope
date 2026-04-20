@@ -5,7 +5,7 @@ using UnityEngine;
 public class Meteorite : MonoBehaviour
 {
     public float speed = 10f;
-    public bool followPlayer = true; // Bool para activar/desactivar el seguimiento
+    public bool followPlayer = true; 
 
     private Transform player;
 
@@ -30,23 +30,23 @@ public class Meteorite : MonoBehaviour
 
         if (followPlayer)
         {
-            // Mover hacia el jugador en X (izquierda-derecha)
+            //mover hacia el jugador en X
             float directionX = player.position.x - transform.position.x;
-            // Mover hacia adelante (hacia la cámara/jugador) en Z
+            //mover hacia adelante (en z)
             movement = new Vector3(directionX, 0, -1f).normalized;
         }
         else
         {
-            // Solo mover recto hacia adelante (sin seguir al jugador)
+            //solo mover recto hacia adelante (sin seguir al jugador)
             movement = new Vector3(0, 0, -1f);
         }
 
         transform.position += movement * speed * Time.deltaTime;
 
-        // Rotar para efecto visual
+        //rotar para efecto visual
         transform.Rotate(Vector3.up * 200f * Time.deltaTime);
 
-        // Destruir si pasa al jugador
+        //destruir si pasa al jugador
         if (transform.position.z < player.position.z - 5f)
         {
             Destroy(gameObject);
@@ -55,6 +55,19 @@ public class Meteorite : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        //si choca con el jugador
+        if (other.CompareTag("Player"))
+        {
+            if (PlayerHurtbox.Instance != null)
+            {
+                PlayerHurtbox.Instance.onHurt?.Invoke(10f);
+            }
+
+            //reiniciar la escena
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        }
+
+        // El meteorito se destruye siempre al chocar
         Destroy(gameObject);
     }
 }

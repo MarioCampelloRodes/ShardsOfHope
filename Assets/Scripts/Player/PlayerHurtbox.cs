@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using static UnityEditor.Progress;
 
 public class PlayerHurtbox : MonoBehaviour
@@ -20,7 +21,8 @@ public class PlayerHurtbox : MonoBehaviour
     {
         if (other.CompareTag("EnemyProjectile"))
         {
-            onHurt?.Invoke(other.GetComponent<EnemyProjectile>().speedReduction);
+            //onHurt?.Invoke(other.GetComponent<EnemyProjectile>().speedReduction);
+            KillPlayer.Instance.Die();
         }
     }
 }

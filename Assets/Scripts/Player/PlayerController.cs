@@ -79,7 +79,6 @@ public class PlayerController : MonoBehaviour
         //SALTO
         if (Input.GetButtonDown("Jump") && isGrounded == true)
         {
-            Debug.Log("Salto");
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
