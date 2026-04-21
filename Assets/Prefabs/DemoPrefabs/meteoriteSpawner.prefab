@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6103183757135511794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 518087932989655778}
+  - component: {fileID: 3051472618321051396}
+  m_Layer: 0
+  m_Name: meteoriteSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &518087932989655778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6103183757135511794}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.7492847, y: -4.62516, z: 4.2723827}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3051472618321051396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6103183757135511794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf3f00480c307584eacc4d8ddf517d32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnRadius: 6
+  distanciaSpawn: 50
+  meteoritoPrefabs:
+  - {fileID: 2410196194466953069, guid: a4f70e9d80f8b1044a55a0ebfecc6cd9, type: 3}
+  - {fileID: 2410196194466953069, guid: b7f68fa0c88a7824aad558b3c1893f35, type: 3}
+  - {fileID: 2410196194466953069, guid: 36df3dbfe14d28143bc35c0da8ad585f, type: 3}
+  SpawnTimeRange: {x: 1, y: 6}

@@ -7,7 +7,7 @@ using UnityEngine.Pool;
 
 public class PlatformSpawner : MonoBehaviour
 {
-    [SerializeField] private Platform platformPrefab;
+    [SerializeField] private List<Platform> platformPrefabs;
     //longitud de la plataforma en Z (es el valor de la escala en Z si utilizas un cubo)
     [SerializeField] private float segmentLength = 20f;
     //segmentos visibles a la vez
@@ -16,6 +16,8 @@ public class PlatformSpawner : MonoBehaviour
     [SerializeField] private float spawnZ = 0f;
  
     public ObjectPool<Platform> platformPool;
+
+    private bool isFirstPlatform = true;
  
     // Z donde se colocara el proximo segmento
     private float nextSpawnZ;
@@ -38,12 +40,29 @@ public class PlatformSpawner : MonoBehaviour
         }
     }
 
+    private Platform GetRandomPrefab()
+    {
+        if (platformPrefabs == null || platformPrefabs.Count == 0)
+        {
+            Debug.LogError("No hay prefabs de plataforma asignados en el Inspector.");
+            return null;
+        }
+
+        if (isFirstPlatform)
+        {
+            isFirstPlatform = false;
+            return platformPrefabs[0];
+        }
+
+        return platformPrefabs[Random.Range(0, platformPrefabs.Count)];
+    }
     //esta funcion se llama al crear el pool por tantas veces como objetos pueda tener
     //por ejemplo, si se especifica un tamaño de 20 para el pool, llama a la funcion 20 veces
     private Platform CreatePlatform()
     {
+        Platform prefab = GetRandomPrefab();
         //crear una nueva plataforma
-        Platform platform = Instantiate(platformPrefab);
+        Platform platform = Instantiate(prefab);
         //asignar el pool de la plataforma
         platform.platformPool = platformPool;
         //desactivar la plataforma para que esté oculta
