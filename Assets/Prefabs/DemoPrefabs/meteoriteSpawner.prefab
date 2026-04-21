@@ -41,13 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6103183757135511794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf3f00480c307584eacc4d8ddf517d32, type: 3}
+  m_Script: {fileID: 11500000, guid: d397e46779af803459e87432d20e6e19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRadius: 6
   distanciaSpawn: 50
-  meteoritoPrefabs:
-  - {fileID: 2410196194466953069, guid: a4f70e9d80f8b1044a55a0ebfecc6cd9, type: 3}
-  - {fileID: 2410196194466953069, guid: b7f68fa0c88a7824aad558b3c1893f35, type: 3}
-  - {fileID: 2410196194466953069, guid: 36df3dbfe14d28143bc35c0da8ad585f, type: 3}
-  SpawnTimeRange: {x: 1, y: 6}
+  meteoritoPrefabs: []
+  SpawnTimeRange: {x: 1, y: 1}
