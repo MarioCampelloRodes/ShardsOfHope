@@ -6,9 +6,15 @@ using UnityEngine;
 public class TimeScore : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
+    public static TimeScore Instance;
 
     private float elapsedTime;
+    public float GetElapsedTime() => elapsedTime;
 
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+    }
     void Update()
     {
         //sumamos el tiempo que pasa en cada frame

@@ -5,20 +5,14 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    //singleton pa los que vienen después (grande Gustave)
     public static ScoreManager Instance;
-
     public TextMeshProUGUI scoreText;
-
-    public int pointsPerInterval = 75;
-    public float intervalSeconds = 5f;
-
-    private int currentScore = 0;
-    private float timer = 0f;
+    //puntos por segundo
+    public float pointsPerSecond = 15f;
+    private float currentScore = 0f;
 
     void Awake()
     {
-        //configurasao del Singleton
         if (Instance == null) Instance = this;
     }
 
@@ -29,28 +23,34 @@ public class ScoreManager : MonoBehaviour
 
     void Update()
     {
-        //cntador de tiempo
-        timer += Time.deltaTime;
-
-        if (timer >= intervalSeconds)
-        {
-            AddScore(pointsPerInterval);
-            timer = 0f; //reiniciar el segundero
-        }
+        //acumular puntos porque necesitamos estímulos constantes para prestar atención
+        currentScore += GetCurrentPointsPerSecond() * Time.deltaTime;
+        PersistentInfo.singleton.UpdateScore(GetScore());
+        UpdateUI();
     }
 
-    //funcion para sumar puntos
+    //esto todavía no está hecho pero es para meter luego los rangos sisisi
+    protected virtual float GetCurrentPointsPerSecond()
+    {
+        if (RankSystem.Instance == null) return pointsPerSecond;
+        return pointsPerSecond * RankSystem.Instance.pointsMultiplier;
+    }
+
+    //devolver el score como int
+    public int GetScore() => Mathf.FloorToInt(currentScore);
+
     public void AddScore(int amount)
     {
         currentScore += amount;
+        PersistentInfo.singleton.UpdateScore(GetScore());
         UpdateUI();
     }
 
     void UpdateUI()
     {
         if (scoreText != null)
-        {
-            scoreText.text = currentScore.ToString();
-        }
+            scoreText.text = GetScore().ToString();
     }
+
 }
+

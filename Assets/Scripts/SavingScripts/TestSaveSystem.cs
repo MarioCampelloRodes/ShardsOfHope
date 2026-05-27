@@ -16,14 +16,14 @@ public class TestSaveSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             currentScore += 100;
-            PersistenInfo.singleton.UpdateScore(currentScore);
+            PersistentInfo.singleton.UpdateScore(currentScore);
             Debug.Log("Score guardado: " + currentScore);
         }
 
         // 3. Probar el TIEMPO: Al pulsar la tecla "T", guardamos el tiempo actual
         if (Input.GetKeyDown(KeyCode.T))
         {
-            PersistenInfo.singleton.UpdateTime(currentTime);
+            PersistentInfo.singleton.UpdateTime(currentTime);
             Debug.Log("Tiempo guardado: " + currentTime + " segundos");
         }
 

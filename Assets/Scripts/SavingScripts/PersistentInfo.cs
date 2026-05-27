@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PersistenInfo : MonoBehaviour
+public class PersistentInfo : MonoBehaviour
 {
-    public static PersistenInfo singleton;
+    public static PersistentInfo singleton;
 
     [SerializeField] private int score;
     [SerializeField] private float time;
+    public int GetScore() => score; 
+    public float GetTime() => time;
+
     //para las instancias se usa el awake en vez del start
     private void Awake()
     {
@@ -35,10 +38,20 @@ public class PersistenInfo : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
         //añadir la funcion de guardar al callback de guardar datos
         SaveManager.OnSaveData += Save;
+    }
+    public void Reset()
+    {
+        score = 0;
+        time = 0f;
+        SaveManager.Save();
+    }
+    private void OnDisable()
+    {
+        SaveManager.OnSaveData -= Save;
     }
     public void UpdateScore(int newScore)
     {
@@ -50,7 +63,7 @@ public class PersistenInfo : MonoBehaviour
         time = newTime;
         SaveManager.Save();
     }
-    
+
     //se añade al callback de guardar info
     void Save(SaveData saveData)
     {

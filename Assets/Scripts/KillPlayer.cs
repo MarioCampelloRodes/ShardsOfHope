@@ -6,10 +6,14 @@ using UnityEngine.SceneManagement;
 public class KillPlayer : MonoBehaviour
 {
     public static KillPlayer Instance;
+    public GameObject gameOverPanel;
+    public GameObject gameUI;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
     }
+
     private void OnTriggerEnter(Collider other)
     {
         Die();
@@ -17,13 +21,10 @@ public class KillPlayer : MonoBehaviour
 
     public void Die()
     {
-        //if (ScoreManager.Instance != null)
-        //{
-        //    ScoreManager.Instance.StopScore();
-        //}
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+        PersistentInfo.singleton.UpdateTime(TimeScore.Instance.GetElapsedTime());
+        Time.timeScale = 0f;
+        gameOverPanel.SetActive(true);
+        gameUI.SetActive(false);
     }
 }
 
