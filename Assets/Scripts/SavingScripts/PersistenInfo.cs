@@ -6,8 +6,6 @@ public class PersistenInfo : MonoBehaviour
 {
     public static PersistenInfo singleton;
 
-    //listas con las ID de todos los cofres abiertos
-    [SerializeField] private List<uint> openChests = new List<uint>(); //el uint es como un int pero no admite valores negativos
     [SerializeField] private int score;
     [SerializeField] private float time;
     //para las instancias se usa el awake en vez del start
@@ -25,8 +23,7 @@ public class PersistenInfo : MonoBehaviour
             //entre los parentesis hay que añadir un SaveData porque el callback lo usa como parametro
             SaveManager.OnLoadedData += (SaveData saveData) =>
             {
-                //actualiza la lista de cofres con la que haa cargado
-                openChests = new List<uint>(saveData.openChestsIDs);
+                //actualiza el score y el time
                 score = saveData.playerScore;
                 time = saveData.bestTime;
             };
@@ -53,30 +50,13 @@ public class PersistenInfo : MonoBehaviour
         time = newTime;
         SaveManager.Save();
     }
-    public void AddOpenChest(uint chestID)
-    {
-        //si la ID no esta en la lista, la añade
-        if(openChests.Contains(chestID) == false)
-        {
-            openChests.Add(chestID);
-            //guardar los cofres
-            SaveManager.Save();
-        }
-    }
-
+    
     //se añade al callback de guardar info
     void Save(SaveData saveData)
     {
-        //actualizar los datos de guardado con la lista de cofres abiertos
-        saveData.openChestsIDs = new List<uint>(openChests);
+        //actualizar los datos de guardado con la puntuación del score y el time
         saveData.playerScore = score;
         saveData.bestTime = time;
-    }
-
-    public bool IsChestOpened(uint chestID)
-    {
-        //devuelve true o false en funcion de si el cofre esta en la lista de abiertos
-        return openChests.Contains(chestID);
     }
 
 }

@@ -14,11 +14,12 @@ public class TimeScore : MonoBehaviour
         //sumamos el tiempo que pasa en cada frame
         elapsedTime += Time.deltaTime;
 
-        //calcular segundos y centesim
+        //calcular el tiempo
+        int minutes = Mathf.FloorToInt(elapsedTime / 60);
         int seconds = Mathf.FloorToInt(elapsedTime % 60);
         int hundredths = Mathf.FloorToInt((elapsedTime * 100) % 100);
 
         //actualizar el teshto
-        timerText.text = string.Format("{0:00}:{1:00}", seconds, hundredths);
+        timerText.text = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, hundredths);
     }
 }
