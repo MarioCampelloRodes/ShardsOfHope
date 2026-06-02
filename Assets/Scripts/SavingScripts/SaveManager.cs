@@ -10,13 +10,10 @@ using UnityEngine.Events;
 [System.Serializable]
 public class SaveData
 {
-    //Lista de cofres ya abiertos
-    public List<uint> openChestsIDs;
-    //variables para guardar la puntuacion y el mejor tiempo
+    //variables para las estadísticas crujientes
     public int playerScore; 
     public float bestTime;
 }
-
 
 
 public class SaveManager

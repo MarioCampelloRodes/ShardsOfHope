@@ -158,10 +158,6 @@ public class PlayerController : MonoBehaviour
         {
             zSpeed = 100;
         }
-        else if(zSpeed <= 0)
-        {
-            //Muerte
-        }
     }
 
     IEnumerator PassiveZRecovery()

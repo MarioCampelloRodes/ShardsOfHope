@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Progress;
 
 public class PlayerHurtbox : MonoBehaviour
 {
