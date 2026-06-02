@@ -42,6 +42,7 @@ public class PauseMenu : MonoBehaviour
         if (_isCountingDown) return;
         if (gameOverPanel.activeSelf) return;
         _pauseMenu.SetActive(true);
+        CursorManager.Instance.ShowCursor();
         Time.timeScale = 0f;
     }
 
@@ -49,6 +50,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (_isCountingDown) return;
         _pauseMenu.SetActive(false);
+        CursorManager.Instance.HideCursor();
         Time.timeScale = 0f;
         StartCoroutine(CountdownCoroutine());
     }
@@ -61,6 +63,7 @@ public class PauseMenu : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
+        CursorManager.Instance.ShowCursor();
         SceneManager.LoadScene(mainMenuScene);
     }
     private IEnumerator CountdownCoroutine()

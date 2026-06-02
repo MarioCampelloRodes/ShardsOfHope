@@ -52,7 +52,7 @@ public class PlayerParry : MonoBehaviour
     {
         isParrying = true;
 
-        parryHitbox.SetActive(true);
+        parryHitbox.SetActive(true); 
         yield return new WaitForSeconds(0.15f);
         parryHitbox.SetActive(false);
 

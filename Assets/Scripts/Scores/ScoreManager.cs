@@ -29,11 +29,10 @@ public class ScoreManager : MonoBehaviour
         UpdateUI();
     }
 
-    //esto todavía no está hecho pero es para meter luego los rangos sisisi
     protected virtual float GetCurrentPointsPerSecond()
     {
         if (RankSystem.Instance == null) return pointsPerSecond;
-        return pointsPerSecond * RankSystem.Instance.pointsMultiplier;
+        return pointsPerSecond * RankSystem.Instance.GetMultiplier();
     }
 
     //devolver el score como int

@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        CursorManager.Instance.ShowCursor();
         int score = PersistentInfo.singleton.GetScore();
         float time = PersistentInfo.singleton.GetTime();
 

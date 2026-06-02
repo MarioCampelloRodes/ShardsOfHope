@@ -5,7 +5,6 @@ using UnityEngine;
 public class Shake : MonoBehaviour
 {
     public float magnitude = 0.1f; 
-    public float speed = 1.0f; 
 
     Vector3 initialPosition;
 
