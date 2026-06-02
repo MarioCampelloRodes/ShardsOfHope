@@ -15,5 +15,5 @@ MonoBehaviour:
   powerUpName: Stamina Regen
   powerUpIcon: {fileID: 21300000, guid: 5e43662e67b1c744592880df112e510b, type: 3}
   duration: 7
-  regenRate: 50
+  regenRate: 60
   staminaColor: {r: 1, g: 0.88059384, b: 0.34528297, a: 1}
