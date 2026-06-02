@@ -21,6 +21,9 @@ public class PlayerParry : MonoBehaviour
     [SerializeField] private float timeBeforeFade = 2f;
     [SerializeField] private float fadeSpeed = 2f;
 
+    [Header("LaserShoot")]
+    public bool shootLaser = false;
+
     private bool isParrying;
     private float fullStaminaTimer;
 

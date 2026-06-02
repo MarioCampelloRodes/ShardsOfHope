@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObjects/PowerUp")]
 public class PowerUp : ScriptableObject
 {
-    public string itemName = "defaultName";
+    public string powerUpName = "defaultName";
 
     public Sprite powerUpIcon;
 
@@ -11,6 +11,6 @@ public class PowerUp : ScriptableObject
 
     public virtual void Use()
     {
-        Debug.Log($"Used Standard Item: {itemName}");
+        Debug.Log($"Used Standard Item: {powerUpName}");
     }
 }

@@ -6,15 +6,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("MOVEMENT")]
-    [SerializeField] float moveSpeed = 5f;
+    public float moveSpeed = 5f;
     [SerializeField] bool canMove = true;
 
     [Header("Z POSITION")]
     [SerializeField] float zSpeed = 100f;
     [SerializeField] Vector2 zRange = new Vector2(-3.5f, 0f);
     [SerializeField] float zSmoothSpeed = 3f;
-    [SerializeField] float passiveZRecoveryAmount = 15f;
-    [SerializeField] float passiveZRecoveryTime = 5f;
+    public float passiveZRecoveryAmount = 15f;
+    public float passiveZRecoveryTime = 5f;
 
     [Header("DASH")]
     [SerializeField] float dashForce = 20f;

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0baa673ab938c4e41bb292c3fb38170a, type: 3}
   m_Name: New Stamina Regen Power Up
   m_EditorClassIdentifier: 
-  itemName: Stamina Regen
-  powerUpIcon: {fileID: 21300000, guid: 57bc7b582fdac174c9aaf3591d8ce89a, type: 3}
-  duration: 0
+  powerUpName: Stamina Regen
+  powerUpIcon: {fileID: 21300000, guid: 5e43662e67b1c744592880df112e510b, type: 3}
+  duration: 7
   regenRate: 50
   staminaColor: {r: 1, g: 0.88059384, b: 0.34528297, a: 1}

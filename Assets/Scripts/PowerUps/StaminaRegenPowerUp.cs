@@ -11,6 +11,6 @@ public class StaminaRegenPowerUp : PowerUp
 
     public override void Use()
     {
-        GameObject.FindWithTag("PowerUpManager").GetComponent<PowerUpManager>().StaminaRegen();
+        GameObject.FindWithTag("PowerUpManager").GetComponent<PowerUpManager>().StaminaRegen(regenRate, staminaColor, duration);
     }
 }
