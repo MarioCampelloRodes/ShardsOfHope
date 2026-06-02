@@ -13,6 +13,7 @@ public class SaveData
     //variables para las estadísticas crujientes
     public int playerScore; 
     public float bestTime;
+    public int bestRank;
 }
 
 

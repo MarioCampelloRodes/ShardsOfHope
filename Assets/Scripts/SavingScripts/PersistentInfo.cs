@@ -8,8 +8,11 @@ public class PersistentInfo : MonoBehaviour
 
     [SerializeField] private int score;
     [SerializeField] private float time;
+    [SerializeField] private int rank;
     public int GetScore() => score; 
     public float GetTime() => time;
+
+    public int GetRank() => rank;
 
     //para las instancias se usa el awake en vez del start
     private void Awake()
@@ -21,17 +24,17 @@ public class PersistentInfo : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
             //añadir una funcion al callback de datos cargados
-            //este codigo tan feo D: es una funcion anonima. Es como una funcion normal
+            //este código tan feo D: es una funcion anonima. Es como una funcion normal
             //pero se crea en el momento para añadirla al callback
-            //entre los parentesis hay que añadir un SaveData porque el callback lo usa como parametro
+            //entre los paréntesis hay que añadir un SaveData porque el callback lo usa como parámetro
             SaveManager.OnLoadedData += (SaveData saveData) =>
             {
                 //actualiza el score y el time
                 score = saveData.playerScore;
                 time = saveData.bestTime;
+                rank = saveData.bestRank;
             };
         }
-        //si al iniciar ya hay un singleton, este objeto debe destruirse para que no haya duplicados
         else
         {
             Destroy(gameObject);
@@ -40,7 +43,6 @@ public class PersistentInfo : MonoBehaviour
 
     private void OnEnable()
     {
-        //añadir la funcion de guardar al callback de guardar datos
         SaveManager.OnSaveData += Save;
     }
     public void Reset()
@@ -63,6 +65,11 @@ public class PersistentInfo : MonoBehaviour
         time = newTime;
         SaveManager.Save();
     }
+    public void UpdateRank(int newRank)
+    {
+        rank = newRank;
+        SaveManager.Save();
+    }
 
     //se añade al callback de guardar info
     void Save(SaveData saveData)
@@ -70,6 +77,7 @@ public class PersistentInfo : MonoBehaviour
         //actualizar los datos de guardado con la puntuación del score y el time
         saveData.playerScore = score;
         saveData.bestTime = time;
+        saveData.bestRank = rank;
     }
 
 }
