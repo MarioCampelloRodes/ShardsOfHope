@@ -55,15 +55,6 @@ public class Meteorite : EnemyProjectile, IParryable
 
     void OnTriggerEnter(Collider other)
     {
-        //si choca con el jugador
-        if (other.CompareTag("Player"))
-        {
-            if (PlayerHurtbox.Instance != null)
-            {
-                PlayerHurtbox.Instance.onHurt?.Invoke(speedReduction);
-            }
-        }
-
         // El meteorito se destruye siempre al chocar
         Destroy(gameObject);
     }
