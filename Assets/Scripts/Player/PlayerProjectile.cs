@@ -26,7 +26,7 @@ public class PlayerProjectile : MonoBehaviour
     {
         if (other.CompareTag("Boss"))
         {
-            //Evento recibir daño boss (Vida, actualizar UI, aumentar score)
+            BossHealth.Instance.TakeDamage(damage);
             pool.Release(this);
         }
     }
