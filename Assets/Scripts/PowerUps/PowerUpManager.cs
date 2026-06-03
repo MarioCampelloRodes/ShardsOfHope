@@ -39,15 +39,15 @@ public class PowerUpManager : MonoBehaviour
         float originalZRegenTime = playerController.passiveZRecoveryTime;
 
         playerController.moveSpeed *= speedMultiplier;
-        playerController.passiveZRecoveryAmount *= zRegenAmount;
-        playerController.passiveZRecoveryTime *= zRegenTime;
+        playerController.passiveZRecoveryAmount = zRegenAmount;
+        playerController.passiveZRecoveryTime = zRegenTime;
 
 
         yield return new WaitForSeconds(duration);
 
-        playerController.moveSpeed *= originalSpeed;
-        playerController.passiveZRecoveryAmount *= originalZRegenAmount;
-        playerController.passiveZRecoveryTime *= originalZRegenTime;
+        playerController.moveSpeed = originalSpeed;
+        playerController.passiveZRecoveryAmount = originalZRegenAmount;
+        playerController.passiveZRecoveryTime = originalZRegenTime;
     }
 
     public void ShootLasers(float duration)

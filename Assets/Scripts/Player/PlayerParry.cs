@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Pool;
+using UnityEditor.MPE;
 
 public class PlayerParry : MonoBehaviour
 {
@@ -23,6 +25,12 @@ public class PlayerParry : MonoBehaviour
 
     [Header("LaserShoot")]
     public bool shootLaser = false;
+    [SerializeField] private PlayerProjectile projectilePrefab;
+
+    private ObjectPool<PlayerProjectile> projectilePool;
+
+    [SerializeField] private Transform shootOrigin;
+    private Transform boss;
 
     private bool isParrying;
     private float fullStaminaTimer;
@@ -31,6 +39,10 @@ public class PlayerParry : MonoBehaviour
     {
         currentStamina = maxStamina;
         UpdateStaminaUI();
+
+        projectilePool = new ObjectPool<PlayerProjectile>(CreateProjectile, GetProjectile, ReleaseProjectile);
+
+        boss = GameObject.FindWithTag("Boss").transform;
     }
     void Update()
     {
@@ -44,6 +56,11 @@ public class PlayerParry : MonoBehaviour
             {
                 currentStamina -= staminaCost;
                 StartCoroutine(AttackCrt());
+
+                if (shootLaser)
+                {
+                    ShootLaser();
+                }
             }
         }
     }
@@ -113,5 +130,45 @@ public class PlayerParry : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         staminaRegenRate = originalRate;
+    }
+
+    //POWER UP LASERS
+
+    public void ShootLaser()
+    {
+        projectilePool.Get();
+    }
+
+    //Esta función se llama al crear el pool tantas veces como objetos pueda tener   
+    private PlayerProjectile CreateProjectile()
+    {
+        //Crear un nuevo proyectil
+        PlayerProjectile projectile = Instantiate(projectilePrefab);
+
+        //Asignar el pool del proyectil
+        projectile.pool = projectilePool;
+
+        //Desactivar el proyectil para que empiece oculto
+        projectile.gameObject.SetActive(false);
+
+        return projectile;
+    }
+
+    //Se llama cada vez que se coja un proyectil del bool
+    private void GetProjectile(PlayerProjectile projectile)
+    {
+        //Al sacar un objeto del pool, lo primero es activarlo
+        projectile.gameObject.SetActive(true);
+
+        //Mover el proyectil al punto de origen del disparo
+        projectile.transform.position = shootOrigin.position;
+
+        projectile.Shoot(boss);
+    }
+
+    //Se llama cada vez que un proyectil vuelve al bool
+    private void ReleaseProjectile(PlayerProjectile projectile)
+    {
+        projectile.gameObject.SetActive(false);
     }
 }

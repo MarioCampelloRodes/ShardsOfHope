@@ -15,6 +15,6 @@ MonoBehaviour:
   powerUpName: Speed Boost
   powerUpIcon: {fileID: 21300000, guid: b001951ae70aea94ca52385d9755196e, type: 3}
   duration: 7
-  speedMultiplier: 1.3
+  speedMultiplier: 1.5
   passiveZRecoveryAmount: 30
   passiveZRecoveryTime: 1.5
