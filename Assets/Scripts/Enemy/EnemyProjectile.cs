@@ -5,4 +5,5 @@ using UnityEngine;
 public class EnemyProjectile : MonoBehaviour
 {
     public float speedReduction;
+    [SerializeField] protected int scoreReward;
 }

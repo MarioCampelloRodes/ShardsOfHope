@@ -8,6 +8,7 @@ TagManager:
   - Parry
   - PowerUpManager
   - Boss
+  - Returnable
   layers:
   - Default
   - TransparentFX
