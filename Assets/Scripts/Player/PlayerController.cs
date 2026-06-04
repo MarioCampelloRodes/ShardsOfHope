@@ -173,12 +173,11 @@ public class PlayerController : MonoBehaviour
     {
         detectedColliders = Physics.OverlapBox(groundCheckCenter.position, groundCheckSize * 0.5f, Quaternion.Euler(0, 0, 0), groundLayer);
 
-        //Cuando el checker detecte al menos un objeto suelo, podemos saltar
         if (detectedColliders.Length > 0)
         {
             isGrounded = true;
         }
-        else //Cuando no haya ningun objeto detectado, ya estaremos en el aire
+        else 
         {
             isGrounded = false;
         }

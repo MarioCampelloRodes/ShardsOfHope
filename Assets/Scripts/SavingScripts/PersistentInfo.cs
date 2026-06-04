@@ -14,7 +14,7 @@ public class PersistentInfo : MonoBehaviour
 
     public int GetRank() => rank;
 
-    //para las instancias se usa el awake en vez del start
+    //para las instancias usar el awake en vez del start
     private void Awake()
     {
         //cuando no hay nadie como singleton, se asigna y se marca para que no se destruya
@@ -23,13 +23,9 @@ public class PersistentInfo : MonoBehaviour
             singleton = this;
             DontDestroyOnLoad(gameObject);
 
-            //añadir una funcion al callback de datos cargados
-            //este código tan feo D: es una funcion anonima. Es como una funcion normal
-            //pero se crea en el momento para añadirla al callback
-            //entre los paréntesis hay que añadir un SaveData porque el callback lo usa como parámetro
             SaveManager.OnLoadedData += (SaveData saveData) =>
             {
-                //actualiza el score y el time
+                //actualiza el score, time y rank
                 score = saveData.playerScore;
                 time = saveData.bestTime;
                 rank = saveData.bestRank;

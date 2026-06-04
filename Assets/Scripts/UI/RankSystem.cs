@@ -15,29 +15,29 @@ public class RankSystem : MonoBehaviour
     [SerializeField] private GameObject rankS;
 
     [Header("XP")]
-    [SerializeField] private float xpToNextRank = 2200f; //XP necesaria para subir de rango
-    [SerializeField] private float xpRankMultiplier = 1.7f; //multiplicador de XP (hace que los niveles más altos requieran más puntos)
-    [SerializeField] private float xpPerSecond = .3f; //XP ganada por tiempo
-    [SerializeField] private float xpPerParry = 20f; //XP ganada por parry 
+    [SerializeField] private float xpToNextRank = 2200f;
+    [SerializeField] private float xpRankMultiplier = 1.7f;
+    [SerializeField] private float xpPerSecond = .3f;
+    [SerializeField] private float xpPerParry = 20f;
     [SerializeField] private float currentXP = 0f;
-    [SerializeField] private float xpLostOnHurt = 800f;
-    [SerializeField] private float hurtMultiplier = 2f; //cuanto más alto el rango, más puntos te quitan al hacerte daño
+    [SerializeField] private float xpLostOnHurt = 500f;
+    [SerializeField] private float hurtMultiplier = 2f;
 
-    // XP necesaria para el rango actual
     private float currentXpToNextRank;
-    // XP que pierdes al recibir daño en el rango actual
     private float currentXpLostOnHurt;
 
     [Header("UI")]
-    [SerializeField] private Image xpBarFill;                
+    [SerializeField] private Image xpBarFill;
 
-    //IDs de cada rango
-    //0=D, 1=C, 2=B, 3=A, 4=S
-    [SerializeField] private int currentRank = 0;            
+    // 0=D, 1=C, 2=B, 3=A, 4=S
+    [SerializeField] private int currentRank = 0;
     [SerializeField] private float pointsMultiplier = 1f;
     [SerializeField] private float multiplierIncrease = 1.5f;
-    public float GetMultiplier() => pointsMultiplier;
 
+    // flag: el medidor de S se llenó al menos una vez
+    private bool sRankFull = false;
+
+    public float GetMultiplier() => pointsMultiplier;
 
     void Awake()
     {
@@ -51,48 +51,76 @@ public class RankSystem : MonoBehaviour
 
     void Update()
     {
-        if (currentRank >= 4) return;
+        if (currentRank == 4 && sRankFull) return;
 
-        // ganar XP por tiempo
         AddXP(xpPerSecond * Time.deltaTime);
     }
 
-    // llamar desde PlayerParry cuando se hace un parry
     public void OnParry()
     {
+        if (currentRank == 4 && sRankFull) return;
         AddXP(xpPerParry);
     }
 
     void AddXP(float amount)
     {
-        if (currentRank >= 4) return;
-
         currentXP += amount;
+
+        if (currentRank == 4)
+        {
+            if (currentXP >= currentXpToNextRank)
+            {
+                currentXP = currentXpToNextRank;
+                sRankFull = true;
+            }
+            UpdateXPBar();
+            return;
+        }
+
         UpdateXPBar();
 
-        if (currentXP >= xpToNextRank)
+        if (currentXP >= currentXpToNextRank)
         {
             currentXP = 0f;
             SetRank(currentRank + 1);
         }
     }
+
     public void OnHurt()
     {
-        currentXP -= xpLostOnHurt;
-        currentXP = Mathf.Max(currentXP, 0f); //que no baje de 0
+        if (currentRank == 4 && sRankFull)
+        {
+            sRankFull = false;
+            currentXP = currentXpToNextRank; 
+        }
+
+        currentXP -= currentXpLostOnHurt;
+
+        if (currentXP < 0f && currentRank > 0)
+        {
+            float overflow = currentXP;
+            SetRank(currentRank - 1);
+            currentXP = currentXpToNextRank + overflow;
+            currentXP = Mathf.Max(currentXP, 0f);
+        }
+        else
+        {
+            currentXP = Mathf.Max(currentXP, 0f);
+        }
+
         UpdateXPBar();
     }
 
     void UpdateXPBar()
     {
         if (xpBarFill != null)
-            xpBarFill.fillAmount = currentXP / xpToNextRank;
+            xpBarFill.fillAmount = currentXP / currentXpToNextRank;
     }
-
 
     void SetRank(int rank)
     {
         currentRank = rank;
+        sRankFull = false; 
 
         rankD.SetActive(false);
         rankC.SetActive(false);
@@ -100,20 +128,30 @@ public class RankSystem : MonoBehaviour
         rankA.SetActive(false);
         rankS.SetActive(false);
 
-        // escalar la XP necesaria y el daño recibido con el rango
         currentXpToNextRank = xpToNextRank * Mathf.Pow(xpRankMultiplier, currentRank);
         currentXpLostOnHurt = xpLostOnHurt * Mathf.Pow(hurtMultiplier, currentRank);
 
         switch (currentRank)
         {
             case 0: rankD.SetActive(true); pointsMultiplier = 1f; break;
-            case 1: rankC.SetActive(true); pointsMultiplier *= multiplierIncrease; break;
-            case 2: rankB.SetActive(true); pointsMultiplier *= multiplierIncrease; break;
-            case 3: rankA.SetActive(true); pointsMultiplier *= multiplierIncrease; break;
-            case 4: rankS.SetActive(true); pointsMultiplier *= multiplierIncrease; break;
+            case 1: rankC.SetActive(true); pointsMultiplier = Mathf.Pow(multiplierIncrease, 1); break;
+            case 2: rankB.SetActive(true); pointsMultiplier = Mathf.Pow(multiplierIncrease, 2); break;
+            case 3: rankA.SetActive(true); pointsMultiplier = Mathf.Pow(multiplierIncrease, 3); break;
+            case 4: rankS.SetActive(true); pointsMultiplier = Mathf.Pow(multiplierIncrease, 4); break;
         }
 
         PersistentInfo.singleton.UpdateRank(currentRank);
         UpdateXPBar();
     }
+
+    //TESTEOS DEL SISTEMA DE RANGOS
+
+    //public void AddXPDebug(float amount) => AddXP(amount);
+
+    //public void ResetRank()
+    //{
+    //    currentXP = 0f;
+    //    sRankFull = false;
+    //    SetRank(0);
+    //}
 }

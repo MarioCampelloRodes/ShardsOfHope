@@ -35,4 +35,9 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene(gameScene);
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("CIÉRRATE SÉSAMO");
+    }
 }

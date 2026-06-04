@@ -7,7 +7,7 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
     public TextMeshProUGUI scoreText;
-    //puntos por segundo
+
     public float pointsPerSecond = 15f;
     private float currentScore = 0f;
 
